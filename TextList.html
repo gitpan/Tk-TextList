@@ -3,8 +3,8 @@
 <head>
   <title>Tk::TextList - Create and manipulate TextList widgets</title>
   <link rel="stylesheet" type="text/css" href="./ptkdocs.css">
-  <meta name="Version" content="3.51">
-  <meta name="Date" content="17 OCT 2000">
+  <meta name="Version" content="3.53">
+  <meta name="Date" content="04 Mar 2001">
   <meta name="Author" content="Rob Seegel">
   <meta name="keywords" content="Tk::TextList, TextList, Listbox, 
       Text, Derived, Perl/Tk, Tk">
@@ -257,7 +257,7 @@ look, feel, and functionality of a Listbox, but <I>IS A</I> ROText
 Widget. The end result is a Listbox which does everything a
 normal Listbox does, plus the ability to justify text,
 and change the appearance of individual list elements using
-tags. </DIV><BR>
+<a href="#tagging">tags</A></DIV><BR>
 
 <DIV CLASS="para">
 Because TextList was designed to be Listbox clone, all of it's
@@ -479,14 +479,12 @@ MainLoop;
 
 <A NAME="bugs"><H3>KNOWN BUGS/ISSUES</H3></A>
 <DIV CLASS="para">
-  <LI>Currently on windows, the default font for the Text widget
-  differs from the one used for Listbox. I haven't noticed this
-  problem on any other platform so far. I have one suggested
-  fix, but I'd like to avoid it if possible. It entails creating
-  (but not packing) a Listbox in the Populate method, using cget
-  to get the font for Listbox, and setting that as the default 
-  font, then destroying the Listbox. It works, but I'm hoping
-  there is another way.
+  <LI>For some reason -exportselection doesn't seem
+      to work correctly for TextList. In Listbox, this
+      option allows there to be multiple listboxes on
+      screen with selected item. This isn't handled 
+      directly in TextList - it's inherited from the
+      Text widget. Unsure of how to proceed for now.
 </DIV>
 
 <HR>
@@ -501,7 +499,7 @@ MainLoop;
 
 <A NAME="version"><H3>VERSION</H3></A>
 <DIV CLASS="para">
-This documentation is applicable to the 3.51 version of 
+This documentation is applicable to the 3.53 version of 
 TextList.
 </DIV>
 <HR>

@@ -19,7 +19,7 @@ package Tk::TextList;
 use strict;
 use Carp;
 use vars qw($VERSION);
-$VERSION = '3.51'; # $Id: //depot/Tk8/TextList/TextList.pm#2 $
+$VERSION = '3.53'; # $Id: //depot/Tk8/TextList/TextList.pm#2 $
 
 use Tk qw (Ev);
 use base qw(Tk::Derived Tk::ROText);
@@ -69,17 +69,27 @@ sub ClassInit {
   $mw->bind($class,'<2>',['scan','mark',Ev('x'),Ev('y')]);
   $mw->bind($class,'<B2-Motion>',['scan','dragto',Ev('x'),Ev('y')]);
 
-  $mw->bind($class,'<FocusIn>' , ['tagConfigure','_ACTIVE_TAG', -underline => 1]);
-  $mw->bind($class,'<FocusOut>', ['tagConfigure','_ACTIVE_TAG', -underline => 0]);
+  $mw->bind($class,'<FocusIn>' , 'FocusIn');
+  $mw->bind($class,'<FocusOut>', 'FocusOut');
 
   return $class;
 }
+
+
 
 
 sub Populate {
   my ($w, $args) = @_;
 
   my $selectMode = delete $args->{-selectmode} || 'browse';
+  my $font       = delete $args->{-font};
+
+  ## Ensure correct default font on MS platform
+  if (!$font) {
+    if ($Tk::platform eq 'MSWin32') {
+      $font = "{MS Sans Serif} 8";
+    }
+  }
   my $defWidth   = 20;
   my $defHeight  = 10;
 
@@ -90,6 +100,7 @@ sub Populate {
 
   $w->ConfigSpecs(
     -selectmode => [qw/PASSIVE   selectMode SelectMode/,$selectMode],
+    -font       => [qw/SELF      font       Font/,      $font      ],
     -justify    => [qw/METHOD    justify    Justify/,   undef      ],
     -spacing3   => [qw/SELF      spacing3   Spacing3    2/         ],   
     -cursor     => [qw/SELF      cursor     Cursor      left_ptr/  ],
@@ -260,6 +271,9 @@ sub insert {
   my $w = shift;
   my $element = shift;
   my $index  = $w->index($element);
+
+  ## Remove carriage returns
+  $element =~ s/\n//;
 
   ## I want this widget to work like Listbox, and that means
   ## that it must work when it is called from Scrolled, 
@@ -710,7 +724,7 @@ sub BeginSelect {
       $w->selectionSet($el)
     }
   }
-  $w->focus if ($w->cget('-takefocus'));
+  $w->focus;
 }
 
 ## BeginToggle(<element>)
@@ -861,6 +875,22 @@ sub ExtendUpDown {
   $w->see('active');
   $w->Motion($index + $amount);
 }
+
+## FocusIn/FocusOut
+sub FocusIn {
+  my $w = shift;
+  if ($w->cget('-takefocus')) {
+    $w->tagConfigure('_ACTIVE_TAG', -underline => 1);
+  }
+}
+
+sub FocusOut {
+  my $w = shift;
+  if ($w->cget('-takefocus')) {
+    $w->tagConfigure('_ACTIVE_TAG', -underline => 0);
+  }
+}
+
 
 ## Motion( <element> )
 ##
