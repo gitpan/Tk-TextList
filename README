@@ -1,0 +1,81 @@
+Tk::TextList (version 3.51) 
+
+Tk::TextList is a ROText widget-based implementation of
+Tk::Listbox. It is not a replacement, but an alternative
+to the Listbox widget. Since it is based on ROTExt, there
+there are several more alternatives, such as justifying elements,
+or applying different styles to individual list elements which
+weren't possible before.
+
+This version (3.51) is a major overhaul of the same widget
+created by Greg London, who was the original Author. Greg
+asked me if I wanted to maintain it, after I told him that
+I'd fixed several bugs.
+
+I decided to avoid adding major new functionality, and 
+instead, I ended up removing several methods - at least 
+temporarily, so I can gauge the reaction of the community
+and see if they are missed. It was my goal to reduce the
+code base and focus on core functionality, and to ensure
+all Listbox methods functioned as advertised before adding
+more methods.
+
+Here is a list of methods which I have deprecated. Please
+realize that these are not necessarily gone for good.
+I've removed them because I consider them 'unusual use' 
+methods, and functionality which can be obtained by
+using base class methods of the Text widget.
+
+tagNextRange
+tagNextRangeChar
+tagPrevRange
+tagPrevRangeChar
+markSet
+markSetChar
+markNext
+markNextChar
+markPrevious
+markPreviousChar
+
+It seemed to me that these methods seemed to be
+taking the widget further and further away from
+being a Listbox widget, and more and more like a
+Text widget with Listbox indices. This was just
+my opinion. I'd welcome others.
+
+To install, type
+ 
+        $ perl Makefile.PL
+        $ make
+        $ make test
+        $ make install
+ 
+I haven't finished the Pod docs, yet, but I 
+have finished the html documentation. How is that 
+possible? I was not well enough versed with
+pod markup. I'll finish the pod docs as time
+allows.
+
+I'd like to thank Greg London, for creating
+this widget, and allow me to continue with
+what he started thereby allowing me to get my
+foot in the door, and start to contribute to
+'open source' in some way. I'd also like to thank
+Hans J. Helgesen (creator of MListbox) who also
+worked on a version of this. He also is allowing
+my to play with one of his toys (MListbox), my
+next undertaking, and also thanks to anyone in
+advance who breaks TextList and tells me about
+it so I can fix it and try to make it better.
+
+Send bug reports, comments and suggestions to 
+RobSeegel@aol.com or better yet, post them to the 
+ptk mailing list. That's the best place so that others 
+can be aware of possible problems, too.
+
+Cheers!
+
+Rob Seegel
+15 Oct 2000
+
+

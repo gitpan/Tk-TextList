@@ -1,0 +1,35 @@
+BODY { 
+  font-family: helvetica, arial, sans-serif; 
+  background-color: white;
+}
+
+PRE { 
+  font-family: fixed;
+  margin-left: .25in
+ }
+
+LI {
+  margin-right: .75in
+}
+
+.para {
+  font-family: helvetica, arial, sans-serif;
+  margin-left: .25in;
+  margin-right: .75in;
+}
+
+.header {
+  font-family: helvetica, arial, sans-serif;
+  font-weight: bold;
+  background-color: #0080ff;
+  color: white;
+}
+ 
+.method {
+  font-family: helvetica, arial, sans-serif;
+  font-weight: bold;
+  margin-left: 0in;
+}
+
+ 
+H2 { FONT-FAMILY: helvetica, arial, sans-serif }

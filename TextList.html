@@ -1,0 +1,514 @@
+<!doctype html public "-//w3c//dtd html 3.2//en">
+<html>
+<head>
+  <title>Tk::TextList - Create and manipulate TextList widgets</title>
+  <link rel="stylesheet" type="text/css" href="./ptkdocs.css">
+  <meta name="Version" content="3.51">
+  <meta name="Date" content="17 OCT 2000">
+  <meta name="Author" content="Rob Seegel">
+  <meta name="keywords" content="Tk::TextList, TextList, Listbox, 
+      Text, Derived, Perl/Tk, Tk">
+  <meta name="description" content="Documentation of the Tk::TextList
+      widget for Perl/Tk. This widget is derived from a ROText Widget and
+      is intended to be used as an enhanced Listbox">
+  <meta name="contributors" content="Greg London">
+  <meta name="comments"   content="Thanks goes out to Greg London for
+     for doing most of the work, which this version is based on, and to
+     Slaven  Rezic for support and suggestions. Also thanks to Nick 
+     Ing-Simmons for the Tk module.">
+ </head>
+<body>
+
+<TABLE CELLPADDING=4 WIDTH="100%" ALIGN=center>
+<TR VALIGN=middle><TD CLASS="header"><font size="+2">
+  &nbsp; Tk::TextList - create and manipulate TextList widgets
+</FONT></TD><TR>
+</TABLE>
+
+
+<UL>
+    <LI><A HREF="#platforms">SUPPORTED PLATFORMS</A>
+    <LI><A HREF="#heirarchy">HEIRARCHY</A>
+    <LI><A HREF="#synopsis">SYNOPSIS</A>
+    <LI><A HREF="#options">OPTIONS</A>
+    <UL>
+        <LI><A HREF="#wsoptions">Widget-specifc</A>
+        <LI><A HREF="#inhoptions">Inherited</A>
+    </UL>
+    <LI><A HREF="#description">DESCRIPTION</A>
+    <LI><A HREF="#methods">METHODS</A>
+    <LI><A HREF="#tagging">TAGGING</A>
+    <LI><A HREF="#bindings">DEFAULT BINDINGS</A>
+    <LI><A HREF="#bugs">KNOWN BUGS/ISSUES</A>
+    <LI><A HREF="#authors">AUTHORS</A>
+    <LI><A HREF="#version">VERSION</A>
+</UL>
+<HR>
+
+<A NAME="platforms"><H3>SUPPORTED PLATFORMS</H3></A>
+<UL>
+    <LI>Linux
+    <LI>Solaris
+    <LI>Windows
+</UL>
+<HR>
+
+<A NAME="heirarchy"><H3>HEIRARCHY</H3></A>
+
+<PRE>
+<A href=""></A>Tk::Widget   
+  |
+  +--<A href=""></A>Tk::Text
+        |
+        +--<A href=""></A>Tk::ROText
+              |
+              +--<A href=""></A><B>Tk::TextList</B>
+ </PRE>
+<HR>
+
+<A NAME="synopsis"><H3>SYNOPSIS</H3></A>
+<PRE>
+use Tk::TextList;
+...
+$textList = $mw->TextList(?options, ...?)
+</PRE>
+<HR>
+
+
+<A NAME="options"><H3>OPTIONS</H3></A>
+<CENTER>
+<TABLE WIDTH="90%" BORDER=1 CELLPADDING=2>
+<TR><TD COLSPAN=3 CLASS="header"><A NAME="wsoptions"></A>
+   &nbsp; Widget-specific Options:</TD></TR>
+<TR><TD COLSPAN=3>
+  <BR>&nbsp; &nbsp;
+  <A HREF="#height">-height</A>&nbsp; &nbsp;
+  <A HREF="#justify">-justify</A>&nbsp; &nbsp;
+  <A HREF="#selectmode">-selectmode</A>&nbsp; &nbsp;
+  <A HREF="#width">-width</A>&nbsp; &nbsp;<BR></TD></TR>
+
+<!-- height-->
+<TR VALIGN=TOP><TD WIDTH="25%"><A NAME="height"></A>
+    <TABLE>
+         <TR><TH ALIGN=RIGHT>Name:</TH><TD>height</TD></TR>
+        <TR><TH ALIGN=RIGHT>Class:</TH><TD>Height</TD></TR>
+        <TR><TH ALIGN=RIGHT>Switch:</TH><TD>-height</TD></TR>  
+    </TABLE>
+<TD>
+    <TABLE>
+         <TR><TD>Specifies the desired height for the window, in lines.
+        If <b>zero</B> or <b>less</B>, then the height for the window
+        is dynamically sized to show all the elements in the listbox.
+        If unspecified, then the height defaults to <b>10</b>.
+        </TD></TR>         
+    </TABLE>
+</TD></TR>
+
+<!-- justify-->
+<TR VALIGN=top><TD WIDTH="25%">
+    <TABLE>
+       <A NAME="justify"></A> 
+       <TR><TH ALIGN=RIGHT>Name:</TH><TD>justify</TD></TR>
+        <TR><TH ALIGN=RIGHT>Class:</TH><TD>Justify</TD></TR>
+        <TR><TH ALIGN=RIGHT>Switch:</TH><TD>-justify</TD></TR>  
+    </TABLE>
+<TD VALIGN=top>
+    <TABLE><TR VALIGN=top>
+        <TD>Specifies how to justify the text within the TextList.
+        Valid values include <b>left, right, and center</B>. 
+        Default value is <b>left</b>.
+        </TD></TR>         
+    </TABLE>
+</TD></TR>
+
+<!-- selectmode-->
+<TR VALIGN=top><TD WIDTH="25%"><A NAME="selectmode"></A>
+    <TABLE>
+        <TR><TH ALIGN=RIGHT>Name:</TH><TD>selectMode</TD></TR>
+        <TR><TH ALIGN=RIGHT>Class:</TH><TD>SelectMode</TD></TR>
+        <TR><TH ALIGN=RIGHT>Switch:</TH><TD>-selectmode</TD></TR>  
+    </TABLE>
+<TD VALIGN=top>
+    <TABLE><TR VALIGN=top>
+        <TD>Specifies one of several styles for manipulating the 
+        selection. The value of the option may be arbitrary, but
+        the default bindings expect it to be either <B>single, 
+        browse, multiple,</B> or <b>extended</b>; the default value 
+        is <b>browse</b>. For more information on the different 
+        modes, refer to the Listbox docs under DEFAULT BINDINGS
+        </TD></TR>         
+    </TABLE>
+</TD></TR>
+
+<!-- width-->
+<TR VALIGN=top><TD WIDTH="25%"><A NAME="width"></A>
+    <TABLE>
+        <TR><TH ALIGN=RIGHT>Name:</TH><TD>width</TD></TR>
+        <TR><TH ALIGN=RIGHT>Class:</TH><TD>Width</TD></TR>
+        <TR><TH ALIGN=RIGHT>Switch:</TH><TD>-width</TD></TR>  
+    </TABLE>
+<TD VALIGN=top>
+    <TABLE><TR VALIGN=top>
+        <TD>Specifies the desired width for the window in characters.
+        If the font doesn't have a uniform width then the width of 
+        the character '0' is used in translating from character units
+        to screen units. If <b>zero</b> or <b>less</b>, then the 
+        desired width for the window is made just large enough to hold
+        all the elements in the listbox. If not specified, then width 
+        defaults to <b>20</b>
+        </TD></TR>         
+    </TABLE>
+</TD></TR>
+</TABLE>
+</CENTER>
+<BR>
+
+<CENTER>
+<TABLE WIDTH="90%" BORDER=1>
+<TR><TD COLSPAN=3 CLASS="header"><A NAME="inhoptions"></A>
+  &nbsp; Options inherited from Text widget:</TD></TR>
+<TR><TD COLSPAN=3>
+   &nbsp; &nbsp;
+   -background &nbsp;
+   -borderwidth &nbsp;
+   <A HREF="#cursor">-cursor</A>&nbsp; &nbsp;
+   -exportselection &nbsp;
+   -foreground &nbsp;
+   -font &nbsp;
+   -foreground &nbsp;
+   -highlightbackground, &nbsp;
+   -highlightcolor &nbsp;
+   -highlightthickness &nbsp;
+   -insertbackground &nbsp;
+   -insertborderwidth &nbsp;
+   -insertofftime &nbsp;
+   -insertontime &nbsp;
+   -insertwidth &nbsp;
+   -padx &nbsp;
+   -pady &nbsp;
+   -relief &nbsp;
+   -selectbackground &nbsp;
+   <A HREF="#selectborderwidth">-selectborderwidth</A> &nbsp; &nbsp;
+   -setgrid &nbsp;
+   -spacing1 &nbsp;
+   -spacing2 &nbsp;
+   <A HREF="#spacing3">-spacing3</A>&nbsp; &nbsp;
+   <A HREF="#state">-state</A>&nbsp; &nbsp;
+   -tabs &nbsp; 
+   -takefocus &nbsp;
+  <A HREF="#wrap">-wrap</A>&nbsp;
+   -xscrollcommand &nbsp;
+   -yscrollcommand &nbsp;
+ </TD>
+</TR>
+</TABLE>
+</CENTER>
+
+
+<BR>
+<DIV CLASS="para"><b>Note:</b>
+   Because TextList is derived from ROText (which is derived from Text), it is 
+   possible to use any option which Text does. This is not always a good
+   idea. In some cases, setting some of these options may damage the
+   Listbox "look-and-feel" that was intended. Those options which are set
+   to different defaults are listed below:
+</DIV><BR>
+
+<CENTER>
+<TABLE BORDER=1 WIDTH="90%" CELLPADDING=3>
+<!-- cursor -->
+<TR VALIGN=TOP>
+  <TD WIDTH="30%"><A NAME="cursor"></A>&nbsp; -cursor</TD>
+  <TD>the default cursor is <b>left_ptr</b>, instead of <b>xterm</b> 
+        in Text</TD></TR>
+
+<!-- selectborderwidth -->
+<TR VALIGN=TOP>
+  <TD WIDTH="30%"><A NAME="selectborderwidth"></A>&nbsp; -selectborderwidth</TD>
+  <TD>the default value is <b>1</b> instead of <b>0</b></TD></TR>
+   
+<!-- spacing3 -->
+<TR VALIGN=TOP>
+  <TD WIDTH="30%"><A NAME="spacing3"></A>&nbsp; -spacing3</TD>
+  <TD>the default value for spacing3  is <b>2</b> instead of <b>0</b></TD></TR>
+   
+<!-- state -->
+<TR VALIGN=TOP>
+  <TD WIDTH="30%"><A NAME="state"></A>&nbsp; -state</TD>
+  <TD>the default value for state is <b>disabled</b> instead of <b>normal</b>. 
+          This is disabled so that the text cursor in the Listbox will not be visible,
+          and is toggled during insert/delete methods. Keep this in mind if 
+          you are using the base class's methods to do inserts/deletes.</TD></TR>
+
+<!-- wrap -->
+<TR VALIGN=TOP>
+  <TD WIDTH="30%"><A NAME="wrap"></A>&nbsp; -wrap</TD>
+  <TD>the default value for wrap is <b>none</b> instead of <b>word</b></TD></TR>
+</TABLE>
+  (<i>Refer to Tk::Text Documentation for more information on Text options)</i>
+</CENTER>
+<BR><BR>
+<HR>
+
+<A NAME="description"><H3>DESCRIPTION</H3></A>
+<DIV CLASS="para">
+The <b>TextList</b> method creates a new window which mimics the
+look, feel, and functionality of a Listbox, but <I>IS A</I> ROText 
+Widget. The end result is a Listbox which does everything a
+normal Listbox does, plus the ability to justify text,
+and change the appearance of individual list elements using
+tags. </DIV><BR>
+
+<DIV CLASS="para">
+Because TextList was designed to be Listbox clone, all of it's
+methods use an indexing scheme which begins with 0, 
+unlike the Text widget which starts at "1.0".  To enhance Listbox, a 
+few Text methods have also been overridden to take advantage of 
+the 0-based indexing scheme, but most have not. The idea is that
+the text methods are all there, IF you require them, but they should
+only be used if there is some functionality you need which TextList
+does not already provide. If you should happen to need them, then 
+use the following syntax:
+</DIV>
+
+<PRE>
+  $textList->SUPER::method(<arg1>...<argn>)
+</PRE>
+
+<DIV CLASS="para">(In the case of Scrolled being used, you 
+   will need to extract a reference to the TextList in order to 
+   call the base class methods.)</DIV><BR>
+
+<DIV CLASS="para">
+In this way, you can treat the TextList as either a Listbox, 
+with it's associated numbering scheme, or as a Text
+widget with Text widget-associated numbering scheme.  As an 
+example,  the following code snippets are roughly equivalent:
+</DIV>
+
+<PRE>
+  $textList->insert(1, $newElement);
+
+  $textList->configure(-state => 'normal');
+  $textList->SUPER::insert("2.0", $newElement . "\n");
+  $textList->configure(-state => 'disabled');
+</PRE>
+
+<DIV CLASS="para">
+Note that with any decision to use the base class methods
+comes the responsibility to deal with any complexity which
+TextList's native methods hide. In the above example,
+I added a carriage return, otherwise it would have appeared
+as though the 'new element' was prepended to any existing
+element at TextList position 1 (Text position 2.0).
+</DIV><BR>
+
+<HR>
+<A NAME="methods"><H3>METHODS</H3></A>
+<DIV CLASS="para">
+    TextList supports all Listbox methods, so refer to the Listbox documents
+ for information on those. The methods <i>should</i> work as described in
+ the docs.</DIV>
+<BR>
+
+<DIV CLASS="para">
+    In addition, TextList supports a few Text methods set up to work with Listbox
+indexing, and a few other convenience methods. These methods are:</DIV>
+<BR>
+
+<!-- justify method-->
+<DT><STRONG><A NAME="m_justify"><EM>$textList</EM>-&gt;justify( <EM>value</EM> )</A></STRONG>
+<BR>
+<DIV CLASS="para">
+  This method corresponds to the -justify option, and can be used as an alternative
+  to the configure method to specify how the text in the TextList should be justified.
+  Valid values are <b>left, right,</B> or <b>center</b></DIV>
+<BR>
+
+<!-- selected method-->
+<DT><STRONG><A NAME="m_selected"><EM>$testList</EM>-&gt;selected(
+    <EM>option</EM> )</A></STRONG>
+
+<DIV CLASS="para">
+   Convenience method which performs operations on the set of elements
+   which have been selected. Exact behavior depends on the option
+   submitted. Currently, two forms are supported:
+
+<DL>
+     <!-- selectedGet method-->
+     <DT><STRONG><A NAME="m_selectedGet"><EM>$textList</EM>
+         -&gt;selectedGet() => ( <EM>selected_element_array</EM> )</A></STRONG>
+
+     <DIV CLASS="para" Style="margin-right: 0in">
+      Returns an array of all the selected items</DIV><BR>
+    
+    <!-- selectedDelete method-->
+     <DT><STRONG><A NAME="m_selectedDelete"><EM>$textList</EM>
+         -&gt;selectedDelete()</A></STRONG>
+
+     <DIV CLASS="para" Style="margin-right: 0in">
+      Deletes all the selected items from the list</DIV><BR>
+     </DIV>
+</DL> 
+
+<!-- setList method-->
+<DT><STRONG><A NAME="m_setList"><EM>$textList</EM>-&gt;setList(
+    <EM>element_array</EM> )</A></STRONG>
+<DIV CLASS="para">
+   This method is an alternative way of setting the list elements.
+   It first deletes any elements which might be present then
+   repopulates widget with newly submitted ones.</DIV><BR>
+
+
+<!-- tag method-->
+<DT><STRONG><A NAME="m_tag"><EM>$textList</EM>-&gt;tag(
+    <EM>option, ?tagName,  index1, ?index2</EM> )</A></STRONG>
+<DIV CLASS="para">
+   This method is a Listbox version of the Text method tag, it uses 
+   the Listbox indexing scheme which starts at 0, instead of the Text
+   index. The exact behavior of <strong>tag</strong> depends on the
+   option submitted. Currently the following forms of <STRONG>tag
+   </STRONG>are supported:
+
+<DL>
+     <!-- tagAdd method-->
+     <DT><STRONG><A NAME="m_tagadd"><EM>$textList</EM>-&gt;tagAdd(
+        <EM>tagName,  index1, ?index2</EM> )</A></STRONG>
+
+     <DIV CLASS="para" Style="margin-right: 0in">
+      Associates the element at index1, and up to index2 (if specified), with 
+      the given tagname.</DIV><BR>
+
+     <!-- tagAddChar method-->
+     <DT><STRONG><A NAME="m_tagaddchar"><EM>$textList</EM>-&gt;tagAddChar(
+        <EM>tagName, element, index1, ?index2</EM> )</A></STRONG>
+
+     <DIV CLASS="para" Style="margin-right: 0in">
+      Applies a tag to a specified list element, starting at char index1
+      and (optionally) until char index2. If index1 is not specified then
+      the tag will only be applied to one character. Note: char indices
+      begin with 0.</DIV><BR>
+
+     <!-- tagRemove method-->
+     <DT><STRONG><A NAME="m_tagremove"><EM>$textList</EM>-&gt;tagRemove(
+        <EM>tagName,  index1, ?index2</EM> )</A></STRONG>
+
+     <DIV CLASS="para" Style="margin-right: 0in">
+      Removes <em>tag name</EM> starting at index1, and up to index2 (if specified).
+      This method is the oposite of tagAdd.</DIV><BR>
+
+     <!-- tagRemoveChar method-->
+     <DT><STRONG><A NAME="m_tagremovechar"><EM>$textList</EM>-&gt;tagRemoveChar(
+        <EM>tagName,  element, index1, ?index2</EM> )</A></STRONG>
+
+     <DIV CLASS="para" Style="margin-right: 0in">
+      Removes <em>tag name</EM> at specified list element, starting at 
+      char index1, and up to index2 (if specified).  This method is the 
+      oposite of tagAddChar.</DIV><BR>
+
+     <DT>Refer to the section on <a href="#tagging">tagging</A> for more details on 
+     usage.
+</DIV>
+</DL>
+
+<HR>
+<A NAME="tagging"><H3>TAGGING</H3></A>
+
+<DIV CLASS="para">
+Before looking at this section, refer to the Tagging section under Text. 
+This explains the concept of tagging, and also provides the options
+available. In the TextList context, tags allow you to define styles for
+individual TextList elements. Events can be bound to tags as well, so 
+this opens a wealth of new possibilities. Instead of repeating everything
+which is stated in clear terms in the Text docs, I'll provide an example
+of how TextList might make use of tags</DIV>
+
+
+<PRE>
+use Tk;
+use Tk::TextList;
+
+my $mw = new MainWindow;
+
+<b>## Create a new TextList</b>
+my $textList = $mw->TextList(
+    -height => 0,
+    -width   => 0
+)->pack;
+
+<b>## Add some elements to the TextList</b>
+$textList->insert('end', (qw/apples oranges cherries bananas grapes pears/));
+
+<b>##  Configure a tag to use and set a style. Note that you 
+##  don't HAVE to define a tag or style before using it. You
+##  can configure it at any time.</b>
+$textList->configure( 'myStyle', 
+    -background => 'blue', 
+    -foreground => 'white',
+    -justify => 'center'
+);
+
+<b>## OK, now Let's add two buttons to test the tagAdd 
+## and tagRemove methods on the 'grape' element</b>
+$mw->Button(
+    -text => 'add',
+    -command => sub {
+        $textList->tagAdd( 'myStyle', 4);
+    }
+)->pack;
+
+$mw->Button(
+    -text => 'remove',
+    -command => sub {
+        $textList->tagRemove('myStyle', 4);
+    }
+)->pack;
+
+MainLoop;
+</PRE>
+<HR>
+
+<A NAME="bindings"><H3>DEFAULT BINDINGS</H3></A>
+<DIV CLASS="para">
+   The default bindings for TextList are identical to those for
+   Listbox. Refer to Listbox docs.
+</DIV>
+<HR>
+
+
+
+<A NAME="bugs"><H3>KNOWN BUGS/ISSUES</H3></A>
+<DIV CLASS="para">
+  <LI>Currently on windows, the default font for the Text widget
+  differs from the one used for Listbox. I haven't noticed this
+  problem on any other platform so far. I have one suggested
+  fix, but I'd like to avoid it if possible. It entails creating
+  (but not packing) a Listbox in the Populate method, using cget
+  to get the font for Listbox, and setting that as the default 
+  font, then destroying the Listbox. It works, but I'm hoping
+  there is another way.
+</DIV>
+
+<HR>
+
+<A NAME="authors"><H3>AUTHORS</H3></A>
+<UL>
+  <LI>Greg London<BR>
+  <LI> Rob Seegel &lt;<EM><A HREF="mailto:robseegel@aol.com">
+      RobSeegel@aol.com</A></EM>&gt;
+</UL>
+<HR>
+
+<A NAME="version"><H3>VERSION</H3></A>
+<DIV CLASS="para">
+This documentation is applicable to the 3.51 version of 
+TextList.
+</DIV>
+<HR>
+<Address><font size="-1">
+This document was written by Rob Seegel on 17 Oct 2000
+</font>
+</Address>
+
+</body>
+</html>
